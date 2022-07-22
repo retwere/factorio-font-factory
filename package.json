@@ -1,0 +1,10 @@
+{
+  "name": "factorio-font-factory",
+  "version": "1.0.0",
+  "description": "Make font blueprints for Factorio!",
+  "main": "index.js",
+  "repository": "git@github.com:retwere/factorio-font-factory.git",
+  "author": "Ja[x] Fowler <retwere@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
