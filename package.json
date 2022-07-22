@@ -6,5 +6,8 @@
   "repository": "git@github.com:retwere/factorio-font-factory.git",
   "author": "Ja[x] Fowler <retwere@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "pako": "^2.0.4"
+  }
 }
