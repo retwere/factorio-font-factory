@@ -33,14 +33,13 @@ export type Blueprint = Item<ItemType.BLUEPRINT, {
 }>
 
 /** A blueprint book. */
-export type BlueprintBook = {
+export type BlueprintBook = Item<ItemType.BLUEPRINT_BOOK, {
   blueprints: IndexedArray<AnyItem>
   active_index?: number
-}
+}>
 
 /** Any item in Factorio that can be imported from/exported to a string. */
 export type AnyItem = Blueprint | BlueprintBook
-
 
 
 // SIGNALS
