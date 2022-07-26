@@ -30,6 +30,7 @@ export type Blueprint = Item<ItemType.BLUEPRINT, {
   // entities?: Array<Entity>
   tiles?: Array<Tile>
   // schedules?: Array<Schedule>
+  "snap-to-grid": Position
 }>
 
 /** A blueprint book. */
