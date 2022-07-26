@@ -73,3 +73,9 @@ export type Icon = { signal: SignalID }
 
 /** A color. */
 export type Color = { r: number; g: number; b: number; a: number }
+
+
+// CONSTANTS
+
+/** The version we report in exported blueprints. */
+export const VERSION = 281479275675648
