@@ -1,6 +1,5 @@
 import Pako from 'pako'
-
-type Blueprint = object // TODO
+import { Blueprint } from '.'
 
 // Create a string from a Blueprint object.
 export function encode(obj: Blueprint) {
