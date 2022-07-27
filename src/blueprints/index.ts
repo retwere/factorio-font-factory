@@ -1,5 +1,3 @@
-import Pako from 'pako'
-
 import { Tile } from './tiles'
 
 
