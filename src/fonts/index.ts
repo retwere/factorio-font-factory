@@ -1,4 +1,4 @@
-import { createCanvas, registerFont } from 'canvas'
+import { createCanvas } from 'canvas'
 import { Point } from '../common'
 
 export type FontFace = {
@@ -50,43 +50,4 @@ export function render(text: string, font: Font): RasterData {
     }
   }
   return out
-}
-
-export function initFonts() {
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-Black.ttf', {
-    family: 'Roboto Slab',
-    weight: 'Black'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-ExtraLight.ttf', {
-    family: 'Roboto Slab',
-    weight: 'ExtraLight'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf', {
-    family: 'Roboto Slab',
-    weight: 'Regular'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf', {
-    family: 'Roboto Slab',
-    weight: 'Bold'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-Light.ttf', {
-    family: 'Roboto Slab',
-    weight: 'Light'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-SemiBold.ttf', {
-    family: 'Roboto Slab',
-    weight: 'SemiBold'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-ExtraBold.ttf', {
-    family: 'Roboto Slab',
-    weight: 'ExtraBold'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-Medium.ttf', {
-    family: 'Roboto Slab',
-    weight: 'Medium'
-  })
-  registerFont('./fonts/Roboto_Slab/static/RobotoSlab-Thin.ttf', {
-    family: 'Roboto Slab',
-    weight: 'Thin'
-  })
 }

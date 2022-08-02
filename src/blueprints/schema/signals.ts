@@ -1,9 +1,6 @@
 /** The types of signals that can be used in circuits or as icons. */
-export enum SignalType {
-  ITEM = 'item',
-  FLUID = 'fluid',
-  VIRTUAL = 'virtual'
-}
+const SIGNAL_TYPES = ['item', 'fluid', 'virtual'] as const
+export type SignalType = typeof SIGNAL_TYPES[number]
 
 /** The ID of a signal. */
 export type SignalID = {
@@ -11,5 +8,5 @@ export type SignalID = {
   type: SignalType
 }
 
-/** These characters are available as signals/icons. */
+/** These characters are available as virtual signals. */
 export const SIGNAL_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
