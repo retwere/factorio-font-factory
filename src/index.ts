@@ -1,14 +1,12 @@
 import fs from 'fs/promises'
 import { argv } from 'process'
 import { Blueprint, BlueprintBook, ItemType, VERSION as version } from './blueprints'
-import { decode, encode } from './blueprints/codec'
+import { encode } from './blueprints/codec'
 import { SignalID, SignalType, SIGNAL_CHARS } from './blueprints/signals'
 import { TileType } from './blueprints/tiles'
-import { Font, FontFace, FONT_FAMILIES, FONT_WEIGHTS, initFonts, render } from './fonts'
+import { FONT, initFonts, render } from './fonts'
 
 const FONT_CHARS = SIGNAL_CHARS + ',.?!:;\'"()[]{}/*+-=><&$%^|#@\\_~`'
-//const SIZES = [8, 16, 32, 64]
-const SIZES = [64]
 const TILE_TYPES = [
   TileType.REFINED_HAZARD_CONCRETE_RIGHT,
   TileType.HAZARD_CONCRETE_RIGHT,
@@ -28,58 +26,26 @@ function signal(char: string, tile: TileType): SignalID {
     : { name: tile, type: SignalType.ITEM }
 }
 
-export function createTextBlueprint(text: string, font: Font, tile: TileType): Blueprint {
+export function createTextBlueprint(text: string, tile: TileType): Blueprint {
   return {
     blueprint: {
       item: ItemType.BLUEPRINT,
       label: text,
       icons: [{ signal: signal(text, tile), index: 1 }],
-      tiles: render(text, font).map(position => {
-        return { position, name: tile }
-      }),
+      tiles: render(text).map(position => ({ position, name: tile })),
       version
     }
   }
 }
 
-export function createFontBook(font: Font, tile: TileType): BlueprintBook {
+export function createFontBook(tile: TileType): BlueprintBook {
   return {
     blueprint_book: {
       item: ItemType.BLUEPRINT_BOOK,
-      label: `${font.size}px ${font.family} ${font.weight}`,
+      label: `${FONT} (${formatTileType(tile)})`,
       icons: [],
       blueprints: [...FONT_CHARS].map((char, index) => {
-        const blueprint = createTextBlueprint(char, font, tile)
-        return { ...blueprint, index }
-      }),
-      version
-    }
-  }
-}
-
-export function createFontFaceBook(font: FontFace, tile: TileType): BlueprintBook {
-  return {
-    blueprint_book: {
-      item: ItemType.BLUEPRINT_BOOK,
-      label: `${font.family} ${font.weight}`,
-      icons: [],
-      blueprints: SIZES.map((size, index) => {
-        const blueprint = createFontBook({ ...font, size }, tile)
-        return { ...blueprint, index }
-      }),
-      version
-    }
-  }
-}
-
-export function createFontFamilyBook(family: string, tile: TileType): BlueprintBook {
-  return {
-    blueprint_book: {
-      item: ItemType.BLUEPRINT_BOOK,
-      label: `${family} (${formatTileType(tile)})`,
-      icons: [],
-      blueprints: FONT_WEIGHTS.map((weight, index) => {
-        const blueprint = createFontFaceBook({ family, weight }, tile)
+        const blueprint = createTextBlueprint(char, tile)
         return { ...blueprint, index }
       }),
       version
@@ -96,19 +62,16 @@ export default async function main(tiles: TileType[]) {
     return
   }
   return Promise.all(
-    tiles
-      .flatMap(tile =>
-        FONT_FAMILIES.map(family => ({ tile, family, book: createFontFamilyBook(family, tile) }))
-      )
-      .map(async ({ tile, family, book }) => {
-        try {
-          const filename = `./output/${family} (${formatTileType(tile)}).txt`
-          await fs.writeFile(filename, encode(book))
-          console.log(`Wrote file: ${filename}`)
-        } catch (e) {
-          console.error(e)
-        }
-      })
+    tiles.map(async tile => {
+      const book = createFontBook(tile)
+      try {
+        const filename = `./output/${FONT} (${formatTileType(tile)}).txt`
+        await fs.writeFile(filename, encode(book))
+        console.log(`Wrote file: ${filename}`)
+      } catch (e) {
+        console.error(e)
+      }
+    })
   ).then(() => console.log('All files written!'))
 }
 
