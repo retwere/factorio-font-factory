@@ -7,12 +7,20 @@ import { TileType } from './blueprints/tiles'
 import { Font, FontFace, FONT_FAMILIES, FONT_WEIGHTS, initFonts, render } from './fonts'
 
 const FONT_CHARS = SIGNAL_CHARS + ',.?!:;\'"()[]{}/*+-=><&$%^|#@\\_~`'
-const SIZES = [8, 16, 32, 64]
+//const SIZES = [8, 16, 32, 64]
+const SIZES = [64]
 const TILE_TYPES = [
   TileType.REFINED_HAZARD_CONCRETE_RIGHT,
   TileType.HAZARD_CONCRETE_RIGHT,
   TileType.STONE
 ]
+
+function formatTileType(tile: TileType): string {
+  return tile
+    .split('-')
+    .map(word => `${word[0].toUpperCase()}${word.slice(1)}`)
+    .join(' ')
+}
 
 function signal(char: string, tile: TileType): SignalID {
   return char.length == 1 && SIGNAL_CHARS.includes(char)
@@ -36,7 +44,7 @@ export function createTextBlueprint(text: string, font: Font, tile: TileType): B
 
 export function createFontBook(font: Font, tile: TileType): BlueprintBook {
   return {
-    'blueprint_book': {
+    blueprint_book: {
       item: ItemType.BLUEPRINT_BOOK,
       label: `${font.size}px ${font.family} ${font.weight}`,
       icons: [],
@@ -51,7 +59,7 @@ export function createFontBook(font: Font, tile: TileType): BlueprintBook {
 
 export function createFontFaceBook(font: FontFace, tile: TileType): BlueprintBook {
   return {
-    'blueprint_book': {
+    blueprint_book: {
       item: ItemType.BLUEPRINT_BOOK,
       label: `${font.family} ${font.weight}`,
       icons: [],
@@ -66,12 +74,9 @@ export function createFontFaceBook(font: FontFace, tile: TileType): BlueprintBoo
 
 export function createFontFamilyBook(family: string, tile: TileType): BlueprintBook {
   return {
-    'blueprint_book': {
+    blueprint_book: {
       item: ItemType.BLUEPRINT_BOOK,
-      label: `${family} (${tile
-        .split('-')
-        .map(word => `${word[0].toUpperCase()}${word.slice(1)}`)
-        .join(' ')})`,
+      label: `${family} (${formatTileType(tile)})`,
       icons: [],
       blueprints: FONT_WEIGHTS.map((weight, index) => {
         const blueprint = createFontFaceBook({ family, weight }, tile)
@@ -92,10 +97,12 @@ export default async function main(tiles: TileType[]) {
   }
   return Promise.all(
     tiles
-      .flatMap(tile => FONT_FAMILIES.map(family => createFontFamilyBook(family, tile)))
-      .map(async (book, index) => {
+      .flatMap(tile =>
+        FONT_FAMILIES.map(family => ({ tile, family, book: createFontFamilyBook(family, tile) }))
+      )
+      .map(async ({ tile, family, book }) => {
         try {
-          const filename = `./output/${index}.txt`
+          const filename = `./output/${family} (${formatTileType(tile)}).txt`
           await fs.writeFile(filename, encode(book))
           console.log(`Wrote file: ${filename}`)
         } catch (e) {

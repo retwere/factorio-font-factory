@@ -6,7 +6,7 @@ export type Tile = {
 }
 
 export enum TileType {
-  STONE = 'stone',
+  STONE = 'stone-path',
   CONCRETE = 'concrete',
   HAZARD_CONCRETE_LEFT = 'hazard-concrete-left',
   HAZARD_CONCRETE_RIGHT = 'hazard-concrete-right',
