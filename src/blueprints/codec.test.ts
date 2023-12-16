@@ -1,5 +1,7 @@
-import { Blueprint } from './schema/items'
+import { Blueprint, ItemType } from '.'
 import { decode, encode } from './codec'
+import { SignalType } from './signals'
+import { TileType } from './tiles'
 
 const blueprint: Blueprint = {
   blueprint: {
@@ -8,11 +10,11 @@ const blueprint: Blueprint = {
         index: 1,
         signal: {
           name: 'signal-A',
-          type: 'virtual'
+          type: SignalType.VIRTUAL
         }
       }
     ],
-    item: 'blueprint',
+    item: ItemType.BLUEPRINT,
     label: 'A',
     'snap-to-grid': {
       x: 4,
@@ -20,70 +22,70 @@ const blueprint: Blueprint = {
     },
     tiles: [
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 1,
           y: 1
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 1,
           y: 2
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 1,
           y: 3
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 1,
           y: 4
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 2,
           y: 0
         }
       },
       {
-        name: 'refined-hazard-concrete-right',
+        name: TileType.REFINED_HAZARD_CONCRETE_RIGHT,
         position: {
           x: 2,
           y: 2
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 3,
           y: 1
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 3,
           y: 2
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 3,
           y: 3
         }
       },
       {
-        name: 'refined-hazard-concrete-left',
+        name: TileType.REFINED_HAZARD_CONCRETE_LEFT,
         position: {
           x: 3,
           y: 4

@@ -1,5 +1,5 @@
 import Pako from 'pako'
-import { AnyItem } from './schema/items'
+import { AnyItem } from '.'
 
 // Create a string from a Blueprint object.
 export function encode(obj: AnyItem) {
